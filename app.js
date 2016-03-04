@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var authenticate = require('./routes/authenticate');
 var sendMessage = require('./routes/sendMessage');
 var getUserList = require('./routes/getUserList');
+var fetchMessage = require('./routes/fetchMessage');
 
 var app = express();
 
@@ -29,7 +30,7 @@ app.use('/api', routes);
 app.use('/api/authenticate', authenticate);
 app.use('/api/sendmessage', sendMessage);
 app.use('/api/getuserlist', getUserList);
-//app.use('/api/fetchmessage', fetchmessage);
+app.use('/api/fetchmessage', fetchMessage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

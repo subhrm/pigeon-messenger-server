@@ -7,28 +7,40 @@ router.post('/', function (req, res, next) {
 
 
     var id = req.body.id;
-    var timestamp = req.body.timestamp;
+    var payload = req.body.payload;
 
     console.log("fetchmessage is now called ");
 
     this.resp = res;
 
     this.fetchSuccessful = function (data) {
-        var messages =[];
-        
+        var messages = [];
+
+        console.log(" callback fetchSuccessful called");
+
+        for (var i = 0; i < data.length; i++) {
+            messages.push({
+                from: data[i].from,
+                message: data[i].message,
+                timestamp: data[i].timestamp
+            });
+        }
+
         this.resp.json({
-            status: "sucess",
+            status: "success",
             messages: messages
         })
     };
-    
+
     this.fetchFailed = function (data) {
+        console.log(" callback fetchFailed called");
         this.resp.json({
-            status: "failed"
+            status: "failed",
+            messages: []
         })
     };
 
-    msgHelper.sendMessage(id, timestamp, this.fetchSuccessful.bind(this) , this.fetchFailed.bind(this) );
+    msgHelper.fetchMessages(id, payload, this.fetchSuccessful.bind(this), this.fetchFailed.bind(this));
 });
 
 module.exports = router;

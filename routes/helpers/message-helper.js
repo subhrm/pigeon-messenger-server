@@ -30,10 +30,26 @@ function sendMessage(from,payload, suc,fail) {
 };
 
 
-function fetchMessage(id,payload, suc,fail){
-    var timestamp = payload.trim();
-    timestamp.length == 0 ? timestamp = "2016-01-01":timestamp=timestamp;
-    var stmt = 'select from messages where ( "to"=$1 or "to" = "GLOBAL" ) and "timestamp" > timestamp $2';
+function fetchMessages(id,payload, suc,fail){
+    payload === undefined ? payload = "" : payload = payload.trim();
+    var timestamp = ""
+    payload.length == 0 ? timestamp = "2016-01-01":timestamp=payload;
+    var stmt = 'SELECT * FROM messages WHERE "to"=$1  AND "timestamp" > TIMESTAMP WITH TIME ZONE $2';
     
-}
-module.exports = {sendMessage, fetchMessage};
+    db.many(stmt,[id,timestamp])
+
+    .then(function (data) {
+        console.log("messages fetched sucessfully");
+        suc(data);
+    })
+
+    .catch(function (error) {
+        console.log("from message-helper - message fetching failed "); // display the error;
+        console.log(id + " " + timestamp + " " +stmt);
+        console.log(error);
+        fail();
+    });
+    
+};
+
+module.exports = {sendMessage, fetchMessages};

@@ -9,7 +9,7 @@ var db = pgp(cn);
 
 function authenticateUser(id,suc,failed) {
 
-    db.one("SELECT password FROM users where id=$1",[id.toString()])
+    db.one("SELECT password FROM users where id=$1 ",[id.toString()])
 
     .then(function (data) {
         suc(data);
@@ -21,4 +21,18 @@ function authenticateUser(id,suc,failed) {
 
 };
 
-module.exports = {authenticateUser:authenticateUser};
+function getUserList(suc,failed) {
+
+    db.many("SELECT id FROM users ")
+
+    .then(function (data) {
+        suc(data);
+    })
+
+    .catch(function (error) {
+        failed();
+    });
+
+};
+
+module.exports = {authenticateUser, getUserList};

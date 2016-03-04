@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
         })
     };
 
-    userHelper.authenticateUser(id, this.authSuccessful.bind(this), this.authFailed.bind(this));
+    userHelper.authenticateUser(id, password,this.authSuccessful.bind(this), this.authFailed.bind(this));
 });
 
 module.exports = router;

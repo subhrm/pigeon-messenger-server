@@ -7,8 +7,7 @@ router.post('/', function (req, res, next) {
 
 
     var from = req.body.from;
-    var to = req.body.to;
-    var message = req.body.message;
+    var payload = req.body.payload;
 
     console.log("sendmessage is now called ");
 
@@ -26,7 +25,7 @@ router.post('/', function (req, res, next) {
         })
     };
 
-    msgHelper.sendMessage(from,to,message, this.sendSuccessful.bind(this) , this.sendFailed.bind(this) );
+    msgHelper.sendMessage(from,payload, this.sendSuccessful.bind(this) , this.sendFailed.bind(this) );
 });
 
 module.exports = router;

@@ -16,6 +16,9 @@ router.post('/', function (req, res, next) {
     this.resp = res;
 
     this.authSuccessful = function (data) {
+        console.log("authnticted !!!");
+        console.log("Password from DB : " + data.password.trim());
+        console.log("Password from User : " + this.password.trim());
         if (data.password.trim() == this.password.trim()) {
             this.resp.json({
                 auth_status: "yes",
@@ -25,6 +28,7 @@ router.post('/', function (req, res, next) {
                 auth_status: "no",
             });
         }
+        
     };
 
     this.authFailed = function (data) {
@@ -33,7 +37,7 @@ router.post('/', function (req, res, next) {
         })
     };
 
-    userHelper.authenticateUser(id, password,this.authSuccessful.bind(this), this.authFailed.bind(this));
+    userHelper.authenticateUser(id,this.authSuccessful.bind(this), this.authFailed.bind(this));
 });
 
 module.exports = router;

@@ -9,9 +9,11 @@ var db = pgp(cn);
 
 function authenticateUser(id,suc,failed) {
 
-    db.one("SELECT password FROM users where id=$1 ",[id.toString()])
+    db.one("SELECT * FROM users where id='"+[id.toString().trim()]+"' ")
 
     .then(function (data) {
+        console.log("fetch successfull in authenticateUser for :" + id.toString().trim());
+        console.log("SELECT * FROM users where id='"+[id.toString().trim()]+"' ");
         suc(data);
     })
 

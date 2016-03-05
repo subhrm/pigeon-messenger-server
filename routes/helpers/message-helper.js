@@ -4,10 +4,14 @@ var pgp = require('pg-promise')({
     }
 });
 
+var assistant = require("./assistant");
+
 var cn = process.env.DATABASE_URL;
 var db = pgp(cn);
 
 function sendMessage(from,payload, suc,fail) {
+    
+    const PA = "ASSISTANT";
     
     var i = payload.indexOf("|");
     var msg = payload.slice(i+1);
@@ -18,6 +22,10 @@ function sendMessage(from,payload, suc,fail) {
 
     .then(function () {
         console.log("message sent sucessfully");
+        if (to == PA){
+            console.log("message received for assistant from " + from );
+            assistant.assist(from,msg);
+        }
         suc();
     })
 

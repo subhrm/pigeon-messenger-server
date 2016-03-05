@@ -2,11 +2,17 @@ var dict = {
     "search" : "search",
     "serch"  : "search",
     "searhc" : "search",
-    "saerch" : "search"
+    "saerch" : "search",
+    "log" : "log",
+    "ahd" : "log",
+    "ticket" : "log"
+    
 }
 
 var helper = {
-    search : require("./searchDirectory")
+    search : require("./searchDirectory"),
+    log : require("./logTicket"),
+    bookroom : require("./bookRoom")
 }
 
 function findIntent(word){

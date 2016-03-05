@@ -11,18 +11,18 @@ var db = pgp(cn);
 
 function searchDirectory(from,action) {
 
-    var q = '*' + action + '*';
+    var q = '%' + action + '%';
     db.many("SELECT * FROM directory where USER_ID like $1", [q])
 
     .then(function (data) {
         var resp = " Found " + data.length.toString() + " results in Directory \n";
-        
-        for (var i = 0; i <= data.length; i++) {
+        console.log(resp);
+        for (var i = 0; i < data.length; i++) {
             resp = resp + " Result " + (i+1).toString() + " - User Name  "+ data[i].full_name + 
                     " , Email: " + data[i].email +" , mobile: " + data[i].mobile ;
         }
         
-        taskResponser.sendMessage("ASSISTANT",from,resp);
+        taskResponser.sendMessage(from,resp);
     })
 
     .catch(function (error) {

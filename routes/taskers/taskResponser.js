@@ -10,9 +10,9 @@ var pgp = require('pg-promise')({
 var cn = process.env.DATABASE_URL;
 var db = pgp(cn);
 
-function sendMessage(to, message) {
+function sendMessage(to, msg) {
     
-    console.log("trying to send response from ASSISTANT");
+    console.log("trying to send response from ASSISTANT , msg : " + msg );
     
     var stmt = 'INSERT INTO messages("from", "to", message, "timestamp") VALUES ($1, $2, $3, current_timestamp)';
 
